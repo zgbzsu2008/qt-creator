@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-06-14T09:45:37
+# Project created by QtCreator 2019-06-15T10:15:35
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = MyEventFilter
+TARGET = selection
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,13 +26,15 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        widget.cpp
+        mainwindow.cpp \
+    spinboxdelegate.cpp
 
 HEADERS += \
-        widget.h
+        mainwindow.h \
+    spinboxdelegate.h
 
 FORMS += \
-        widget.ui
+        mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

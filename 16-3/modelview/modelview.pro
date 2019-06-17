@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-06-14T11:34:41
+# Project created by QtCreator 2019-06-15T18:25:04
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = MyTimerEvent
+TARGET = modelview
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,10 +26,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        widget.cpp
+        widget.cpp \
+    stringlistmodel.cpp
 
 HEADERS += \
-        widget.h
+        widget.h \
+    stringlistmodel.h
 
 FORMS += \
         widget.ui
