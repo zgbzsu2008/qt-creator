@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-06-15T14:19:16
+# Project created by QtCreator 2019-06-17T11:12:20
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = modelview
+TARGET = AnalogClock
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,10 +26,10 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        widget.cpp
+        analogclock.cpp
 
 HEADERS += \
-        widget.h
+        analogclock.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

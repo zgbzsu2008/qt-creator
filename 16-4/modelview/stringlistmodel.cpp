@@ -1,5 +1,8 @@
 ﻿#include "stringlistmodel.h"
 
+#include <QDataStream>
+#include <QMimeData>
+
 StringListModel::StringListModel(const QStringList& strings, QObject* parent)
     : QAbstractListModel(parent), stringList(strings)
 {}
@@ -53,9 +56,9 @@ bool StringListModel::setData(const QModelIndex& index, const QVariant& value, i
 Qt::ItemFlags StringListModel::flags(const QModelIndex& index) const
 {
     if (!index.isValid()) {
-        return Qt::ItemIsEnabled;
+        return Qt::ItemIsEnabled | Qt::ItemIsDropEnabled;
     }
-    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 }
 
 bool StringListModel::insertRows(int row, int count, const QModelIndex& parent)
@@ -76,4 +79,72 @@ bool StringListModel::removeRows(int row, int count, const QModelIndex& parent)
     }
     endRemoveRows();
     return true;
+}
+
+QStringList StringListModel::mimeTypes() const
+{
+    QStringList types;
+    types << "application/vnd.txt.list";
+    return types;
+}
+
+QMimeData* StringListModel::mimeData(const QModelIndexList& indexes) const
+{
+    QMimeData* mimeData = new QMimeData;
+    QByteArray encodedData;
+    QDataStream stream(&encodedData, QIODevice::WriteOnly);
+    for (auto index : indexes) {
+        if (index.isValid()) {
+            QString text = data(index, Qt::DisplayRole).toString();
+            stream << text;
+        }
+    }
+    mimeData->setData("application/vnd.txt.list", encodedData);
+    return mimeData;
+}
+
+bool StringListModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column,
+                                   const QModelIndex& parent)
+{
+    if (action == Qt::IgnoreAction) {
+        return false;
+    }
+    if (!data->hasFormat("application/vnd.txt.list")) {
+        return false;
+    }
+    if (column > 0) {
+        return false;
+    }
+
+    int beginRow;
+    if (row != -1) {
+        beginRow = row;
+    } else if (parent.isValid()) {
+        beginRow = parent.row();
+    } else {
+        beginRow = rowCount(QModelIndex());
+    }
+
+    QByteArray encodedData = data->data("application/vnd.txt.list");
+    QDataStream stream(&encodedData, QIODevice::ReadOnly);
+    QStringList items;
+    int rows = 0;
+    while (!stream.atEnd()) {
+        QString text;
+        stream >> text;
+        items << text;
+        ++rows;
+    }
+    insertRows(beginRow, rows);
+    for (auto item : items) {
+        QModelIndex idx = index(beginRow, 0);
+        setData(idx, items);
+        ++beginRow;
+    }
+    return true;
+}
+
+Qt::DropActions StringListModel::supportedDropActions() const
+{
+    return Qt::CopyAction | Qt::MoveAction;
 }

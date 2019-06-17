@@ -23,6 +23,12 @@ Widget::Widget(QWidget* parent) : QWidget(parent)
     listView = new QListView(this);
     listView->setModel(model);
 
+    // 设置拖拽
+    listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    listView->setDragEnabled(true);
+    listView->setAcceptDrops(true);
+    listView->setDropIndicatorShown(true);
+
     tableView = new QTableView(this);
     tableView->setModel(model);
 

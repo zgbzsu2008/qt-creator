@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-06-15T14:19:16
+# Project created by QtCreator 2019-06-17T14:42:40
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = modelview
+TARGET = Calculator
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,10 +26,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        widget.cpp
+        calculator.cpp \
+    button.cpp
 
 HEADERS += \
-        widget.h
+        calculator.h \
+    button.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

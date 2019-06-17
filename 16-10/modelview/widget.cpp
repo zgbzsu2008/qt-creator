@@ -1,4 +1,5 @@
 ﻿#include "widget.h"
+
 #include <QLayout>
 #include <QListWidget>
 #include <QTableWidget>
